@@ -141,7 +141,7 @@ impl HuffmanDecoder {
                     }
 
                     match next_byte {
-                        0x00 => return Err(Error::Format("FF 00 found where marker was expected".to_owned())),
+                        0x00 => return Err(Error::Format("FF 00 found where marker was expected (read_bits)".to_owned())),
                         _    => self.marker = Some(Marker::from_u8(next_byte).unwrap()),
                     }
 

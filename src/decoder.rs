@@ -348,7 +348,12 @@ impl<R: Read> Decoder<R> {
         }
 
         match byte {
-            0x00 => Err(Error::Format("FF 00 found where marker was expected".to_owned())),
+            0x00 => {
+                let mut segment = [0u8; 4];
+                self.reader.read_exact(&mut segment)?;
+                println!("{:02X?}", segment);
+                Err(Error::Format("FF 00 found where marker was expected (read_marker)".to_owned()))
+            },
             _    => Ok(Marker::from_u8(byte).unwrap()),
         }
     }
